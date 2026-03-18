@@ -1,0 +1,5 @@
+{
+  "user.mapping": [
+    "assignment.core:assignment-service-user=assignment-service-user"
+  ]
+}

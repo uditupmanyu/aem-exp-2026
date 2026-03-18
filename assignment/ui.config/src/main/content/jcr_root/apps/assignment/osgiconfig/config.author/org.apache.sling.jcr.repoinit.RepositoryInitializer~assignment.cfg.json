@@ -1,0 +1,49 @@
+{
+  "scripts": [
+    "create path (cq:Page) /content/assignment",
+
+    "create path (cq:Page) /content/assignment/test",
+    "create path (cq:PageContent) /content/assignment/test/jcr:content",
+    "set properties on /content/assignment/test/jcr:content\n  set jcr:title{String} to \"Test\"\n  set sling:resourceType{String} to \"assignment/components/page\"\nend",
+
+    "create path (cq:Page) /content/assignment/test/en",
+    "create path (cq:PageContent) /content/assignment/test/en/jcr:content",
+    "set properties on /content/assignment/test/en/jcr:content\n  set jcr:title{String} to \"Test EN\"\n  set sling:resourceType{String} to \"assignment/components/page\"\nend",
+
+    "create path (cq:Page) /content/assignment/language-master",
+    "create path (cq:PageContent) /content/assignment/language-master/jcr:content",
+    "set properties on /content/assignment/language-master/jcr:content\n  set jcr:title{String} to \"Language Master\"\n  set sling:resourceType{String} to \"assignment/components/page\"\nend",
+
+    "create path (cq:Page) /content/assignment/language-master/en",
+    "create path (cq:PageContent) /content/assignment/language-master/en/jcr:content",
+    "set properties on /content/assignment/language-master/en/jcr:content\n  set jcr:title{String} to \"Language Master EN\"\n  set sling:resourceType{String} to \"assignment/components/page\"\nend",
+
+    "create path (cq:Page) /content/assignment/in",
+    "create path (cq:PageContent) /content/assignment/in/jcr:content",
+    "set properties on /content/assignment/in/jcr:content\n  set jcr:title{String} to \"India\"\n  set sling:resourceType{String} to \"assignment/components/page\"\nend",
+
+    "create path (cq:Page) /content/assignment/in/en",
+    "create path (cq:PageContent) /content/assignment/in/en/jcr:content",
+    "set properties on /content/assignment/in/en/jcr:content\n  set jcr:title{String} to \"India EN\"\n  set sling:resourceType{String} to \"assignment/components/page\"\nend",
+
+    "create service user assignment-service-user with path /home/users/system/assignment",
+
+    "create group admin-group with path /home/groups/assignment",
+    "create group user-group with path /home/groups/assignment",
+
+    "create user admin-user with password admin123",
+    "set properties on authorizable(admin-user)\n  set profile/email{String} to \"admin@assignment.com\"\n  set profile/givenName{String} to \"Site\"\n  set profile/familyName{String} to \"Admin\"\nend",
+
+    "create user content-author with password author123",
+    "set properties on authorizable(content-author)\n  set profile/email{String} to \"author@assignment.com\"\n  set profile/givenName{String} to \"Content\"\n  set profile/familyName{String} to \"Author\"\nend",
+
+    "add admin-user to group admin-group",
+    "add content-author to group user-group",
+
+    "set ACL for assignment-service-user\n  allow jcr:read,jcr:modifyProperties,rep:write on /content/assignment\n  allow jcr:read,jcr:modifyProperties,rep:write on /var/workflow\nend",
+
+    "set ACL for admin-group\n allow jcr:read on /\n allow jcr:read on /libs\n  allow jcr:read on /apps\n deny jcr:read on /content restriction(rep:glob,/*)\n allow jcr:read,rep:write,jcr:versionManagement,jcr:lockManagement,jcr:modifyProperties,crx:replicate on /content/assignment\n  allow jcr:read,jcr:modifyProperties,rep:write on /var/workflow\nend",
+
+    "set ACL for user-group\n allow jcr:read on /\n  allow jcr:read on /libs\n  allow jcr:read on /apps\n deny jcr:read on /content restriction(rep:glob,/*)\n allow jcr:read on /content/assignment\n  allow jcr:read,jcr:modifyProperties,rep:write on /content/assignment/test/en\n  allow jcr:read on /content/assignment/language-master\n  allow jcr:read on /content/assignment/language-master/en\n  allow jcr:read on /content/assignment/in\nend"
+  ]
+}
